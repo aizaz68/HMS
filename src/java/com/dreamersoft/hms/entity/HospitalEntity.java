@@ -68,7 +68,7 @@ public class HospitalEntity implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_deleted")
-    private short isDeleted;
+    private boolean isDeleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hospitalId")
     private List<DoctorEntity> doctorEntityList;
 
@@ -79,7 +79,7 @@ public class HospitalEntity implements Serializable {
         this.hospitalId = hospitalId;
     }
 
-    public HospitalEntity(Integer hospitalId, String hospitalName, String hospitalAddress, String hospitalContactNumber, String hospitalMail, short isDeleted) {
+    public HospitalEntity(Integer hospitalId, String hospitalName, String hospitalAddress, String hospitalContactNumber, String hospitalMail, boolean isDeleted) {
         this.hospitalId = hospitalId;
         this.hospitalName = hospitalName;
         this.hospitalAddress = hospitalAddress;
@@ -128,11 +128,11 @@ public class HospitalEntity implements Serializable {
         this.hospitalMail = hospitalMail;
     }
 
-    public short getIsDeleted() {
+    public boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(short isDeleted) {
+    public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 

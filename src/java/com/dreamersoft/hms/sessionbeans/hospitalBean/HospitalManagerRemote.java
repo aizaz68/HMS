@@ -14,7 +14,17 @@ import javax.ejb.Remote;
 @Remote
 public interface HospitalManagerRemote {
 
-public HospitalEntity getHospitalByID(int hospitalID);
+    public HospitalEntity getHospitalByID(int hospitalID) throws HospitalNotFoundException;
+
+    public HospitalEntity getHospitalByName(String hospitalName) throws HospitalNotFoundException;
+
+    public void addHospital(String hospitalName, String hospitalAddress, String hospitalContactNumber, String hospitalEmail) throws InvalidHospitalAddressException, InvalidHospitalNameException, InvalidContactNumberException, InvalidEmailException;
+
+    public void deleteHospitalById(int hospitalId) throws HospitalNotFoundException;
+
+    public void deleteHospitalByName(String hospitalName) throws HospitalNotFoundException;
+    
+    public void updateHospital(String hospitalName, String hospitalAddress, String hospitalContactNumber, String hospitalEmail) throws HospitalNotFoundException, InvalidHospitalAddressException, InvalidContactNumberException, InvalidEmailException;
 
 
     

@@ -50,7 +50,7 @@ public class RoleEntity implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_deleted")
-    private short isDeleted;
+    private boolean isDeleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
     private List<UserRoleEntity> userRoleEntityList;
 
@@ -61,7 +61,7 @@ public class RoleEntity implements Serializable {
         this.roleId = roleId;
     }
 
-    public RoleEntity(Integer roleId, String roleName, short isDeleted) {
+    public RoleEntity(Integer roleId, String roleName, boolean isDeleted) {
         this.roleId = roleId;
         this.roleName = roleName;
         this.isDeleted = isDeleted;
@@ -83,11 +83,11 @@ public class RoleEntity implements Serializable {
         this.roleName = roleName;
     }
 
-    public short getIsDeleted() {
+    public boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(short isDeleted) {
+    public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 

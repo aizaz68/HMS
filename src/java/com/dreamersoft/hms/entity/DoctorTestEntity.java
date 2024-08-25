@@ -38,7 +38,7 @@ public class DoctorTestEntity implements Serializable {
     @Column(name = "doctor_test_id")
     private Integer doctorTestId;
     @Column(name = "is_deleted")
-    private Short isDeleted;
+    private boolean isDeleted;
     @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
     @ManyToOne(optional = false)
     private DoctorEntity doctorId;
@@ -61,11 +61,11 @@ public class DoctorTestEntity implements Serializable {
         this.doctorTestId = doctorTestId;
     }
 
-    public Short getIsDeleted() {
+    public boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Short isDeleted) {
+    public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 
