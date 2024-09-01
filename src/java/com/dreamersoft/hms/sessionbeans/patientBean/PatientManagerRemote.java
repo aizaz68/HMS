@@ -14,7 +14,9 @@ import javax.ejb.Remote;
 @Remote
 public interface PatientManagerRemote {
 
-public PatientEntity getPatientByID(int patientID);
+public PatientEntity getPatientByID(int patientID)throws PatientNotFoundException;
+
+
 
 
     

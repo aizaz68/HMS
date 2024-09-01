@@ -44,6 +44,12 @@ public class AdviseManager implements AdviseManagerRemote {
     @EJB
     DosageManagerRemote dosageManager;
 
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+    public void persist(Object object) {
+        em.persist(object);
+    }
+
     @Override
     public AdviseEntity getAdviseByID(int adviseID) throws AdviseNotFoundException {
 
@@ -62,18 +68,12 @@ public class AdviseManager implements AdviseManagerRemote {
     }
 
     @Override
-    public AdviseEntity getAdviseByPatientVisitIDandDoctorMedicineID(int patientVisitID, int doctorMedicineID) throws AdviseNotFoundException {
+    public AdviseEntity getAdviseByPatientVisitIDandDoctorMedicineID(int patientVisitID, int doctorMedicineID) throws AdviseNotFoundException, PatientVisitNotFoundException, DoctorMedicineNotFoundException {
 
-        try {
-            PatientVisitEntity patientVisitEntity = patientVisitManager.getPatientVisitByID(patientVisitID);
-        } catch (PatientVisitNotFoundException ex) {
-            Logger.getLogger(AdviseManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            DoctorMedicineEntity doctorMedicine = doctorMedicineManager.getDoctorMedicineByID(doctorMedicineID);
-        } catch (DoctorMedicineNotFoundException ex) {
-            Logger.getLogger(AdviseManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        PatientVisitEntity patientVisitEntity = patientVisitManager.getPatientVisitByID(patientVisitID);
+
+        DoctorMedicineEntity doctorMedicine = doctorMedicineManager.getDoctorMedicineByID(doctorMedicineID);
+
         AdviseEntity adviseEntity = null;
         Query qry = em.createQuery("Select s From AdviseEntity s Where s.doctorMedicineId.doctorMedicineId=:doctorMedicineID AND s.patientVisitId.patientVisitId=:patientVisitID AND s.isDeleted=false");
         qry.setParameter("patientVisitID", patientVisitID);
@@ -102,12 +102,6 @@ public class AdviseManager implements AdviseManagerRemote {
 
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-    public void persist(Object object) {
-        em.persist(object);
-    }
-
     @Override
     public List<AdviseEntity> getAllAdviseList() throws AdviseNotFoundException {
 
@@ -121,123 +115,106 @@ public class AdviseManager implements AdviseManagerRemote {
     }
 
     @Override
-    public AdviseEntity addNewAdvise(int dosageID, int medicineDays, int patientVisitID, int doctorMedicineID) throws InvalidMedicineDaysException, AdviseAlreadyExistsException {
-        if (medicineDays <= 0) {
-            throw new InvalidMedicineDaysException("Invalid value for MedicineDays :" + medicineDays);
-        }
+    public AdviseEntity getAdviseByDosageIDandDoctorMedicineIDandPatientVisitID(int dosageID, int doctorMedicineID, int patientVisitID) throws AdviseNotFoundException, DosageNotFoundException, DoctorMedicineNotFoundException, PatientVisitNotFoundException {
 
-        DosageEntity dosageEntity = new DosageEntity();
-        DoctorMedicineEntity doctorMedicineEntity = new DoctorMedicineEntity();
-        PatientVisitEntity patientVisitEntity = new PatientVisitEntity();
-        try {
-            dosageEntity = dosageManager.getDosageByID(dosageID);
-        } catch (DosageNotFoundException ex) {
-            Logger.getLogger(AdviseManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            doctorMedicineEntity = doctorMedicineManager.getDoctorMedicineByID(doctorMedicineID);
-        } catch (DoctorMedicineNotFoundException ex) {
-            Logger.getLogger(AdviseManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            patientVisitEntity = patientVisitManager.getPatientVisitByID(patientVisitID);
-        } catch (PatientVisitNotFoundException ex) {
-            Logger.getLogger(AdviseManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        AdviseEntity adviseEntity ;
+        DosageEntity dosageEntity = dosageManager.getDosageByID(dosageID);
+        DoctorMedicineEntity doctorMedicineEntity = doctorMedicineManager.getDoctorMedicineByID(doctorMedicineID);
+
+        PatientVisitEntity patientVisitEntity = patientVisitManager.getPatientVisitByID(patientVisitID);
+
+        AdviseEntity adviseEntity = new AdviseEntity();
         Query qry = em.createQuery("Select s From AdviseEntity s Where s.dosageId.dosageId=:newDosageID AND s.doctorMedicineId.doctorMedicineId=:newDoctorMedicineID AND s.patientVisitId.patientVisitId=:newPatientVisitID and s.isDeleted=false");
         qry.setParameter("dosage", dosageID);
         qry.setParameter("doctorMedicineID", doctorMedicineID);
         qry.setParameter("patientVisitID", patientVisitID);
-        adviseEntity = (AdviseEntity) qry.getSingleResult();
-        if (adviseEntity != null) {
-            throw new AdviseAlreadyExistsException("Advise Already Exists with the provided values \n : " + "dosageID :" + dosageID + " \n PatientvisitID : " + patientVisitID + "\n DoctorMedicineID: " + doctorMedicineID);
+        if (qry.getSingleResult() == null) {
+            throw new AdviseNotFoundException("No Advise Found With this dosageID : " + dosageID + " and doctorMedicineID: " + doctorMedicineID + " and PatientVisitID : " + patientVisitID);
+
         }
-        adviseEntity = new AdviseEntity();
-        adviseEntity.setDoctorMedicineId(doctorMedicineEntity);
-        adviseEntity.setDosageId(dosageEntity);
-        adviseEntity.setMedicineDays(medicineDays);
-        adviseEntity.setPatientVisitId(patientVisitEntity);
-        em.persist(adviseEntity);
-        em.flush();
-        em.refresh(adviseEntity);
+        return adviseEntity;
+
+    }
+
+    @Override
+    public int checkMedicineDays(int medicineDays) throws InvalidMedicineDaysException {
+        if (medicineDays <= 0) {
+            throw new InvalidMedicineDaysException("Invalid value for MedicineDays :" + medicineDays);
+        }
+        return medicineDays;
+    }
+
+    @Override
+    public AdviseEntity addNewAdvise(int dosageID, int medicineDays, int patientVisitID, int doctorMedicineID) throws InvalidMedicineDaysException, AdviseAlreadyExistsException, DosageNotFoundException, DoctorMedicineNotFoundException, PatientVisitNotFoundException {
+
+        this.checkMedicineDays(medicineDays);
+
+        DosageEntity dosageEntity = dosageManager.getDosageByID(dosageID);
+        DoctorMedicineEntity doctorMedicineEntity = doctorMedicineManager.getDoctorMedicineByID(doctorMedicineID);
+
+        PatientVisitEntity patientVisitEntity = patientVisitManager.getPatientVisitByID(patientVisitID);
+        AdviseEntity adviseEntity = null;
+        try {
+            this.getAdviseByDosageIDandDoctorMedicineIDandPatientVisitID(dosageID, doctorMedicineID, patientVisitID);
+            throw new AdviseNotFoundException("Advise Already Exists with the provided values \n : " + "dosageID :" + dosageID + " \n PatientvisitID : " + patientVisitID + "\n DoctorMedicineID: " + doctorMedicineID);
+        } catch (AdviseNotFoundException ex) {
+
+            adviseEntity = new AdviseEntity();
+            adviseEntity.setDoctorMedicineId(doctorMedicineEntity);
+            adviseEntity.setDosageId(dosageEntity);
+            adviseEntity.setMedicineDays(medicineDays);
+            adviseEntity.setPatientVisitId(patientVisitEntity);
+            em.persist(adviseEntity);
+            em.flush();
+            em.refresh(adviseEntity);
+
+        }
 
         return adviseEntity;
 
     }
 
     @Override
-    public AdviseEntity updateAdviseEntity(int adviseID, int newDosageID, int newMedicineDays, int newPatientVisitID, int newDoctorMedicineID) throws InvalidMedicineDaysException,DuplicateAdviseException {
-     if (newMedicineDays <= 0) {
-            throw new InvalidMedicineDaysException("Invalid value for MedicineDays :" + newMedicineDays);
-        }
-     
-     AdviseEntity adviseEntityUpdate=new AdviseEntity();
-     
-     
-     try{
-     adviseEntityUpdate=this.getAdviseByID(adviseID);
-     }catch(AdviseNotFoundException ex){
-     Logger.getLogger(AdviseManager.class.getName()).log(Level.SEVERE, null, ex);
-     }
+    public AdviseEntity updateAdviseEntity(int adviseID, int newDosageID, int newMedicineDays, int newPatientVisitID, int newDoctorMedicineID) throws InvalidMedicineDaysException, DuplicateAdviseException, AdviseNotFoundException, DosageNotFoundException, DoctorMedicineNotFoundException, DoctorMedicineNotFoundException, PatientVisitNotFoundException {
+        this.checkMedicineDays(newMedicineDays);
 
-        DosageEntity dosageEntity =new DosageEntity();
-        DoctorMedicineEntity doctorMedicineEntity=new DoctorMedicineEntity() ;
-        PatientVisitEntity patientVisitEntity=new PatientVisitEntity() ;
-        try {
-            dosageEntity = dosageManager.getDosageByID(newDosageID);
-        } catch (DosageNotFoundException ex) {
-            Logger.getLogger(AdviseManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            doctorMedicineEntity = doctorMedicineManager.getDoctorMedicineByID(newDoctorMedicineID);
-        } catch (DoctorMedicineNotFoundException ex) {
-            Logger.getLogger(AdviseManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            patientVisitEntity = patientVisitManager.getPatientVisitByID(newPatientVisitID);
-        } catch (PatientVisitNotFoundException ex) {
-            Logger.getLogger(AdviseManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        AdviseEntity adviseEntityUpdate = this.getAdviseByID(adviseID);
+
+        DosageEntity dosageEntity = dosageManager.getDosageByID(newDosageID);
+
+        DoctorMedicineEntity doctorMedicineEntity = doctorMedicineManager.getDoctorMedicineByID(newDoctorMedicineID);
+
+        PatientVisitEntity patientVisitEntity = patientVisitManager.getPatientVisitByID(newPatientVisitID);
+
         AdviseEntity adviseEntity = null;
-        Query qry = em.createQuery("Select s From AdviseEntity s Where s.dosageId.dosageId=:dosageID AND s.doctorMedicineId.doctorMedicineId=:doctorMedicineID AND s.patientVisitId.patientVisitId=:patientVisitID and s.isDeleted=false");
-        qry.setParameter("newDosage", newDosageID);
-        qry.setParameter("newDoctorMedicineID", newDoctorMedicineID);
-        qry.setParameter("newPatientVisitID", newPatientVisitID);
-        adviseEntity = (AdviseEntity) qry.getSingleResult();
-        if (adviseEntity != null&& (!Objects.equals(adviseEntity.getAdviseId(), adviseEntityUpdate.getAdviseId()))) {
-            throw new DuplicateAdviseException("Advise Already Exists Against another Record with the provided values \n : " + "dosageID :" + newDosageID + " \n PatientvisitID : " + newPatientVisitID + "\n DoctorMedicineID: " + newDoctorMedicineID);
+        try {
+            adviseEntity = this.getAdviseByDosageIDandDoctorMedicineIDandPatientVisitID(newDosageID, newDoctorMedicineID, newPatientVisitID);
+            if (adviseEntity != null && (!Objects.equals(adviseEntity.getAdviseId(), adviseEntityUpdate.getAdviseId()))) {
+                throw new DuplicateAdviseException("Advise Already Exists Against another Record with the provided values \n : " + "dosageID :" + newDosageID + " \n PatientvisitID : " + newPatientVisitID + "\n DoctorMedicineID: " + newDoctorMedicineID);
+            }
+
+        } catch (AdviseNotFoundException ex) {
+            adviseEntityUpdate.setDosageId(dosageEntity);
+            adviseEntityUpdate.setDoctorMedicineId(doctorMedicineEntity);
+            adviseEntityUpdate.setMedicineDays(newMedicineDays);
+            adviseEntityUpdate.setPatientVisitId(patientVisitEntity);
+            em.persist(adviseEntityUpdate);
+            em.flush();
+            em.refresh(adviseEntityUpdate);
         }
-       
-        adviseEntityUpdate.setDosageId(dosageEntity);
-        adviseEntityUpdate.setDoctorMedicineId(doctorMedicineEntity);
-        adviseEntityUpdate.setMedicineDays(newMedicineDays);
-        adviseEntityUpdate.setPatientVisitId(patientVisitEntity);
-        em.persist(adviseEntityUpdate);
-        em.flush();
-        em.refresh(adviseEntityUpdate);
 
         return adviseEntityUpdate;
 
-    
-    
     }
 
     @Override
     public AdviseEntity deleteAdviseEntity(int adviseID) throws AdviseNotFoundException {
-    
-        AdviseEntity adviseEntity=new AdviseEntity();
-        
-        try{
-        adviseEntity=this.getAdviseByID(adviseID);
-        }
-        catch(AdviseNotFoundException ex){
-          Logger.getLogger(AdviseManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        AdviseEntity adviseEntity = this.getAdviseByID(adviseID);
+
         adviseEntity.setIsDeleted(true);
         em.persist(adviseEntity);
         em.flush();
         em.refresh(adviseEntity);
-    return adviseEntity;
+        return adviseEntity;
     }
 }
