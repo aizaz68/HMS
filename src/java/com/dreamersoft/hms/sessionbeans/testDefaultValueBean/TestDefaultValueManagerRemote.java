@@ -14,7 +14,7 @@ import javax.ejb.Remote;
 @Remote
 public interface TestDefaultValueManagerRemote {
 
-public TestDefaultValueEntity getTestDefaultValueByID(int testDefaultValueID);
+public TestDefaultValueEntity getTestDefaultValueByID(int testDefaultValueID)throws TestDefaultValueNotFoundException;
 
     
 }

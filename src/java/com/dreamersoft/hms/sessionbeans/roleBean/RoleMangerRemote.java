@@ -7,6 +7,7 @@ package com.dreamersoft.hms.sessionbeans.roleBean;
 import com.dreamersoft.hms.entity.RoleEntity;
 import javax.ejb.Remote;
 
+
 /**
  *
  * @author aizaz
@@ -15,7 +16,7 @@ import javax.ejb.Remote;
 public interface RoleMangerRemote {
 
 
-public RoleEntity getRoleByID(int roleID);
+public RoleEntity getRoleByID(int roleID) throws RoleNotFoundException;
 
 
 

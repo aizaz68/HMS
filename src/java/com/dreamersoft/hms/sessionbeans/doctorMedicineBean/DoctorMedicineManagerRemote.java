@@ -17,6 +17,7 @@ import javax.ejb.Remote;
 @Remote
 public interface DoctorMedicineManagerRemote {
 
+
     public void deleteDoctorMedicineByID(int doctorMedicineID) throws DoctorMedicineNotFoundException;
 
     public DoctorMedicineEntity updateDoctorMedicine(int doctorMedicineID, int doctorID, int medicineID, int dosageID, int defaultDays) throws DoctorMedicineNotFoundException, DoctorNotFoundException, MedicineNotFoundException, DosageNotFoundException, DoctorMedicineAlreadyExistsException;

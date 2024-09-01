@@ -28,6 +28,6 @@ public interface DosageManagerRemote {
 
     public List<DosageEntity> getAllDosages() throws DosageNotFoundException;
     
-  
+
     
 }

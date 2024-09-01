@@ -14,9 +14,18 @@ import javax.ejb.Stateless;
 @Stateless
 public class PatientVisitManager implements PatientVisitManagerRemote {
 
+    /**
+     *
+     * @param patientVisitID
+     * @return
+     * @throws PatientVisitNotFoundException
+     */
     @Override
-    public PatientVisitEntity getPatientVisitByID(int patientVisitID) {
+    public PatientVisitEntity getPatientVisitByID(int patientVisitID) throws PatientVisitNotFoundException{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    
+    
     }
 
     // Add business logic below. (Right-click in editor and choose

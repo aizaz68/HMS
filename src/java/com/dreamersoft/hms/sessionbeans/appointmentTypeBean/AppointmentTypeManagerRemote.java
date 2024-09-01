@@ -14,6 +14,6 @@ import javax.ejb.Remote;
 @Remote
 public interface AppointmentTypeManagerRemote {
 
-    public AppointmentTypeEntity getAppointmentTypeByID(int appointmentTypeID);
+    public AppointmentTypeEntity getAppointmentTypeByID(int appointmentTypeID) throws AppointmentTypeNotFoundException;
 
 }

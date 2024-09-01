@@ -6,11 +6,13 @@ package com.dreamersoft.hms.sessionbeans.userBean;
 
 /**
  *
- * @author PMYLS
+
+ * @author aizaz
  */
- public class UserNotFoundException extends Exception {
-     public UserNotFoundException(String msg){
-         super(msg);
-     }
+public  class UserNotFoundException extends Exception {
+    public UserNotFoundException(String msg){
+    super(msg);
+    }
 }
+
 

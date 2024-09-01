@@ -7,14 +7,7 @@ package com.dreamersoft.hms.sessionbeans.doctorMedicineBean;
 
 import com.dreamersoft.hms.entity.DoctorEntity;
 import com.dreamersoft.hms.entity.DoctorMedicineEntity;
-import com.dreamersoft.hms.entity.DosageEntity;
-import com.dreamersoft.hms.entity.MedicineEntity;
-import com.dreamersoft.hms.sessionbeans.doctorBean.DoctorManagerRemote;
-import com.dreamersoft.hms.sessionbeans.doctorBean.DoctorNotFoundException;
-import com.dreamersoft.hms.sessionbeans.dosageBean.DosageNotFoundException;
-import com.dreamersoft.hms.sessionbeans.dosageBean.DosageManagerRemote;
-import com.dreamersoft.hms.sessionbeans.medicineBean.MedicineManagerRemote;
-import javax.ejb.EJB;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -44,15 +37,9 @@ public class DoctorMedicineManager implements DoctorMedicineManagerRemote {
 
     @Override
     public DoctorMedicineEntity getDoctorMedicineByID(int doctorMedicineID) throws DoctorMedicineNotFoundException {
-        try {
-            Query qry = em.createQuery("SELECT dm FROM DoctorMedicineEntity dm WHERE dm.doctorMedicineId = :doctorMedicineID AND dm.isDeleted = false");
-            qry.setParameter("doctorMedicineID", doctorMedicineID);
-            return (DoctorMedicineEntity) qry.getSingleResult();
-        } catch (NoResultException ex) {
-            throw new DoctorMedicineNotFoundException("Doctor Medicine Not Found For This ID: " + doctorMedicineID);
-        } catch (Exception ex) {
-            throw new DoctorMedicineNotFoundException("An unexpected error occurred while fetching Doctor Medicine: " + ex.getMessage());
-        }
+
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
     }
 
     @Override
