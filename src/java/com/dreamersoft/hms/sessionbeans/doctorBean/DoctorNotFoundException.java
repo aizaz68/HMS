@@ -6,10 +6,12 @@ package com.dreamersoft.hms.sessionbeans.doctorBean;
 
 /**
  *
+
  * @author aizaz
  */
 public class DoctorNotFoundException extends Exception {
     public DoctorNotFoundException(String msg){
     super(msg);
     }
+
 }

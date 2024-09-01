@@ -6,12 +6,11 @@ package com.dreamersoft.hms.sessionbeans.dosageBean;
 
 /**
  *
-
- * @author aizaz
+ * @author PMYLS
  */
-public class DosageNotFoundException extends Exception {
-    public DosageNotFoundException(String msg){
-    super(msg);
-    }
-
+ public class DuplicateDosageException extends Exception {
+     public DuplicateDosageException (String msg){
+         super(msg);
+     }
+    
 }
