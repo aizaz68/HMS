@@ -2,16 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.dreamersoft.hms.sessionbeans.dosageBean;
+package com.dreamersoft.hms.sessionbeans.doctorMedicineBean;
 
 /**
  *
-
- * @author aizaz
+ * @author PMYLS
  */
-public class DosageNotFoundException extends Exception {
-    public DosageNotFoundException(String msg){
-    super(msg);
+ public class MedicineNotFoundException extends Exception {
+    public MedicineNotFoundException(String msg){
+        super(msg);
     }
-
+    
 }
