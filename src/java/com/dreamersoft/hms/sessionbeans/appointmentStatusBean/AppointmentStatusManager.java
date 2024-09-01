@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
 public class AppointmentStatusManager implements AppointmentStatusManagerRemote {
 
     @Override
-    public AppointmentStatusEntity getAppointmentStatusByID(int appointmentStatusID) {
+    public AppointmentStatusEntity getAppointmentStatusByID(int appointmentStatusID)throws AppointmentStatusNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

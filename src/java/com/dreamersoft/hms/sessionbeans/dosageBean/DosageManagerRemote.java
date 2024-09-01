@@ -14,6 +14,6 @@ import javax.ejb.Remote;
 @Remote
 public interface DosageManagerRemote {
     
-    public DosageEntity getDosageByID(int dosageID);
+    public DosageEntity getDosageByID(int dosageID) throws DosageNotFoundException;
     
 }

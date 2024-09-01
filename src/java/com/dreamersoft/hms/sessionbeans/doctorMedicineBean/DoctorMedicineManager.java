@@ -5,6 +5,7 @@
 package com.dreamersoft.hms.sessionbeans.doctorMedicineBean;
 
 import com.dreamersoft.hms.entity.DoctorMedicineEntity;
+import java.util.List;
 import javax.ejb.Stateless;
 
 /**
@@ -15,8 +16,9 @@ import javax.ejb.Stateless;
 public class DoctorMedicineManager implements DoctorMedicineManagerRemote {
 
     @Override
-    public DoctorMedicineEntity getDoctorMedicineByID(int doctorMedicineID) {
+    public DoctorMedicineEntity getDoctorMedicineByID(int doctorMedicineID) throws DoctorMedicineNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
     }
 
     // Add business logic below. (Right-click in editor and choose

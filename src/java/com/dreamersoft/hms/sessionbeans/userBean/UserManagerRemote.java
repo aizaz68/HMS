@@ -15,6 +15,6 @@ import javax.ejb.Remote;
 public interface UserManagerRemote {
     
     
-    public UsersEntity getUserByID(int userID);
+    public UsersEntity getUserByID(int userID) throws  UserNotFoundException;
     
 }
