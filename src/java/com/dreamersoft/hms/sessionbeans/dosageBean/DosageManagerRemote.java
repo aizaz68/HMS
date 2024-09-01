@@ -5,6 +5,8 @@
 package com.dreamersoft.hms.sessionbeans.dosageBean;
 
 import com.dreamersoft.hms.entity.DosageEntity;
+
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -13,7 +15,19 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface DosageManagerRemote {
+
+    public void deleteDosageById(int dosageID) throws DosageNotFoundException;
+
+    public DosageEntity updateDosage(int dosageID, String dosageDescription) throws DosageNotFoundException;
+
+    public DosageEntity addNewDosage(String dosageDescription) throws DuplicateDosageException;
+
+    public DosageEntity getDosageByID(int dosageID) throws DosageNotFoundException;
+
+    public void restoreDeletedDosage(int dosageId) throws DosageNotFoundException;
+
+    public List<DosageEntity> getAllDosages() throws DosageNotFoundException;
     
-    public DosageEntity getDosageByID(int dosageID);
+  
     
 }

@@ -14,7 +14,7 @@ import javax.ejb.Remote;
 @Remote
 public interface HospitalManagerRemote {
 
-public HospitalEntity getHospitalByID(int hospitalID);
+public HospitalEntity getHospitalByID(int hospitalID) throws HospitalNotFoundException;
 
 
     
