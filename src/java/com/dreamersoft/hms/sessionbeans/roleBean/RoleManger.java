@@ -7,6 +7,7 @@ package com.dreamersoft.hms.sessionbeans.roleBean;
 import com.dreamersoft.hms.entity.RoleEntity;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -30,28 +31,31 @@ public class RoleManger implements RoleMangerRemote {
             throw new RoleNotFoundException("Role not found");
         }
         return role; 
-       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     //add role
     @Override
-    public void addRole(String roleName){
+    public RoleEntity addRole(String roleName){
         RoleEntity role = new RoleEntity();
         role.setRoleName(roleName);
         role.setIsDeleted(false);
+        em.persist(role);
+        return role;
     }
     
     //update role by id
-    public void updateRoleById(int roleId,String newRoleName) throws RoleNotFoundException{
+    @Override
+    public RoleEntity updateRoleById(int roleId,String newRoleName) throws RoleNotFoundException{
         RoleEntity role = getRoleByID(roleId);
         role.setRoleName(newRoleName);
         role.setIsDeleted(false);
         em.merge(role);
+        return role;
     }
 
     //get role list
     @Override
-    public List<RoleEntity> getRoleList(String roleName) throws RoleListNotfoundException {
+    public List<RoleEntity> getRoleListByName(String roleName) throws RoleListNotfoundException {
         Query qry = em.createQuery("select a from RoleEntity a where a.roleName = :roleName and a.isDeleted = false", RoleEntity.class);
         qry.setParameter("roleName", roleName);
         List<RoleEntity> roleList = qry.getResultList();
@@ -66,6 +70,15 @@ public class RoleManger implements RoleMangerRemote {
     public void deleteRole(int roleId) throws RoleNotFoundException{
         RoleEntity role = getRoleByID(roleId);
         role.setIsDeleted(true);
+    }
+    
+    public List<RoleEntity> getAllRoles() throws RoleListNotfoundException{
+        Query qry = em.createQuery("SELECT r FROM RoleEntity r WHERE r.isDeleted = false");
+        List<RoleEntity> roleList = qry.getResultList();
+        if(roleList.isEmpty()){
+            throw new RoleListNotfoundException("No record found in Role list");
+        }
+        return roleList;
     }
 
 

@@ -4,7 +4,9 @@
  */
 package com.dreamersoft.hms.sessionbeans.hospitalBean;
 
+import com.dreamersoft.hms.entity.DoctorEntity;
 import com.dreamersoft.hms.entity.HospitalEntity;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -14,18 +16,21 @@ import javax.ejb.Remote;
 @Remote
 public interface HospitalManagerRemote {
 
-    public HospitalEntity getHospitalByID(int hospitalID) throws HospitalNotFoundException;
-
     public HospitalEntity getHospitalByName(String hospitalName) throws HospitalNotFoundException;
 
-    public void addHospital(String hospitalName, String hospitalAddress, String hospitalContactNumber, String hospitalEmail) throws InvalidHospitalAddressException, InvalidHospitalNameException, InvalidContactNumberException, InvalidEmailException;
+    public HospitalEntity getHospitalByID(int hospitalID) throws HospitalNotFoundException;
 
-    public void deleteHospitalById(int hospitalId) throws HospitalNotFoundException;
+    public HospitalEntity addHospital(String hospitalName, String hospitalAddress, String hospitalContactNumber, String hospitalEmail)
+            throws InvalidHospitalAddressException, InvalidHospitalNameException, InvalidContactNumberException, InvalidEmailException, HospitalAlreadyExistException, HospitalNotFoundException;
 
-    public void deleteHospitalByName(String hospitalName) throws HospitalNotFoundException;
+    public HospitalEntity getHospitalByHospitalNameAndHospitalContactNumber(String hospitalName, String hospitalContactNumber) throws HospitalNotFoundException;
+
+    public void updateHospital(int hospitalId, String newHospitalName, String newHospitalAddress, String newHospitalContactNumber, String newHospitalEmail) throws HospitalNotFoundException, InvalidHospitalAddressException, InvalidContactNumberException, InvalidEmailException, HospitalAlreadyExistException;
+
+    public List<DoctorEntity> getHospitalList() throws HospitalNotFoundException;
+
+
     
-    public void updateHospital(String hospitalName, String hospitalAddress, String hospitalContactNumber, String hospitalEmail) throws HospitalNotFoundException, InvalidHospitalAddressException, InvalidContactNumberException, InvalidEmailException;
-
 
     
 }

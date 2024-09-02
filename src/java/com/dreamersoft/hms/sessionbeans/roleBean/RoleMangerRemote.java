@@ -18,11 +18,15 @@ public interface RoleMangerRemote {
 
     public RoleEntity getRoleByID(int roleID) throws RoleNotFoundException;
 
-    public void addRole(String roleName);
+    public RoleEntity addRole(String roleName);
 
-    public List<RoleEntity> getRoleList(String roleName) throws RoleListNotfoundException;
+    public RoleEntity updateRoleById(int roleId, String newRoleName) throws RoleNotFoundException;
+
+    public List<RoleEntity> getRoleListByName(String roleName) throws RoleListNotfoundException;
 
     public void deleteRole(int roleId) throws RoleNotFoundException;
+
+    public List<RoleEntity> getAllRoles() throws RoleListNotfoundException;
 
 
     

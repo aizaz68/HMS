@@ -13,6 +13,6 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface DoctorManagerRemote {
-    public DoctorEntity getDoctorByID(int doctorID);
+    public DoctorEntity getDoctorByID(int doctorID)throws DoctorNotFoundException;
     
 }

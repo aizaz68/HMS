@@ -14,7 +14,7 @@ import javax.ejb.Remote;
 @Remote
 public interface TestManagerRemote {
 
-public TestEntity getTestByID(int testID);
+public TestEntity getTestByID(int testID) throws TestNotFoundException;
 
     
 }
