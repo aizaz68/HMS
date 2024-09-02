@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author aizaz
+ * @author Home
  */
 @Entity
 @Table(name = "appointment_status")
@@ -50,7 +50,7 @@ public class AppointmentStatusEntity implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_deleted")
-    private short isDeleted;
+    private boolean isDeleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appointmentStatusId")
     private List<AppointmentEntity> appointmentEntityList;
 
@@ -61,7 +61,7 @@ public class AppointmentStatusEntity implements Serializable {
         this.appointmentStatusId = appointmentStatusId;
     }
 
-    public AppointmentStatusEntity(Integer appointmentStatusId, String appointmentStatusName, short isDeleted) {
+    public AppointmentStatusEntity(Integer appointmentStatusId, String appointmentStatusName, boolean isDeleted) {
         this.appointmentStatusId = appointmentStatusId;
         this.appointmentStatusName = appointmentStatusName;
         this.isDeleted = isDeleted;
@@ -83,11 +83,11 @@ public class AppointmentStatusEntity implements Serializable {
         this.appointmentStatusName = appointmentStatusName;
     }
 
-    public short getIsDeleted() {
+    public boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(short isDeleted) {
+    public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 

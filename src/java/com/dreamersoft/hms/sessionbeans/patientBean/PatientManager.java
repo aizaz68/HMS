@@ -16,7 +16,7 @@ public class PatientManager implements PatientManagerRemote {
 
     @Override
     public PatientEntity getPatientByID(int patientID) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new PatientEntity(1);
     }
 
     // Add business logic below. (Right-click in editor and choose

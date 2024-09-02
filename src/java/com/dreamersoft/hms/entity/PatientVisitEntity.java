@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author aizaz
+ * @author Home
  */
 @Entity
 @Table(name = "patient_visit")
@@ -73,7 +73,7 @@ public class PatientVisitEntity implements Serializable {
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "patient_age")
-    private String patientAge;
+    private int patientAge;
     @Size(max = 45)
     @Column(name = "diagnosis1")
     private String diagnosis1;
@@ -91,7 +91,7 @@ public class PatientVisitEntity implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_deleted")
-    private short isDeleted;
+    private boolean isDeleted;
     @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
     @ManyToOne(optional = false)
     private DoctorEntity doctorId;
@@ -110,7 +110,7 @@ public class PatientVisitEntity implements Serializable {
         this.patientVisitId = patientVisitId;
     }
 
-    public PatientVisitEntity(Integer patientVisitId, String patientAge, String diagnosis3, short isDeleted) {
+    public PatientVisitEntity(Integer patientVisitId, int patientAge, String diagnosis3, boolean isDeleted) {
         this.patientVisitId = patientVisitId;
         this.patientAge = patientAge;
         this.diagnosis3 = diagnosis3;
@@ -165,11 +165,11 @@ public class PatientVisitEntity implements Serializable {
         this.patientWeight = patientWeight;
     }
 
-    public String getPatientAge() {
+    public int getPatientAge() {
         return patientAge;
     }
 
-    public void setPatientAge(String patientAge) {
+    public void setPatientAge(int patientAge) {
         this.patientAge = patientAge;
     }
 
@@ -205,11 +205,11 @@ public class PatientVisitEntity implements Serializable {
         this.patientVisitInstructions = patientVisitInstructions;
     }
 
-    public short getIsDeleted() {
+    public boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(short isDeleted) {
+    public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 
