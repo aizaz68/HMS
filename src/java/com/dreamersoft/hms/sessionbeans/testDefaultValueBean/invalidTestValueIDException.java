@@ -4,13 +4,14 @@
  */
 package com.dreamersoft.hms.sessionbeans.testDefaultValueBean;
 
+/**
+ *
+ * @author Masood Subhani
+ */
+public class invalidTestValueIDException extends Exception {
 
-
-public class TestDefaultValueNotFoundException extends Exception {
-
-    public TestDefaultValueNotFoundException(String message) {
+    public invalidTestValueIDException(String message) {
         super(message);
     }
     
-
 }

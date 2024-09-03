@@ -4,13 +4,14 @@
  */
 package com.dreamersoft.hms.sessionbeans.testDefaultValueBean;
 
+/**
+ *
+ * @author Masood Subhani
+ */
+public class testDefaultValueCannotBeEmptyException extends Exception {
 
-
-public class TestDefaultValueNotFoundException extends Exception {
-
-    public TestDefaultValueNotFoundException(String message) {
+    public testDefaultValueCannotBeEmptyException(String message) {
         super(message);
     }
     
-
 }
