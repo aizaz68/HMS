@@ -14,7 +14,7 @@ import javax.ejb.Remote;
 @Remote
 public interface AppointmentStatusManagerRemote {
     
-    public AppointmentStatusEntity getAppointmentStatusByID(int appointmentStatusID);
+    public AppointmentStatusEntity getAppointmentStatusByID(int appointmentStatusID)throws AppointmentStatusNotFoundException;
     
     
 }

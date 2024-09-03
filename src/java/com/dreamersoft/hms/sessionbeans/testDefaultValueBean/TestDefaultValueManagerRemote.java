@@ -16,7 +16,7 @@ import javax.ejb.Remote;
 @Remote
 public interface TestDefaultValueManagerRemote {
 
-    public TestDefaultValueEntity AddTestDefaultValue(double testDefaultValue, boolean isMale, boolean isDeleted) throws InvalidTestValueException, InvalidGenderException, InvalidDeletedStatusException;
+   public TestDefaultValueEntity AddTestDefaultValue(double testDefaultValue, boolean isMale, boolean isDeleted) throws InvalidTestValueException, InvalidGenderException, InvalidDeletedStatusException;
 
     public TestDefaultValueEntity getTestDefaultValueByID(int testDefaultValueID) throws invalidTestValueIDException, TestDefaultValueNotFoundException;
 

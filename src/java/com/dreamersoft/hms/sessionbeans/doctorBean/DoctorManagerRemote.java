@@ -5,6 +5,9 @@
 package com.dreamersoft.hms.sessionbeans.doctorBean;
 
 import com.dreamersoft.hms.entity.DoctorEntity;
+import com.dreamersoft.hms.sessionbeans.hospitalBean.HospitalNotFoundException;
+import com.dreamersoft.hms.sessionbeans.userBean.UserNotFoundException;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -13,6 +16,6 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface DoctorManagerRemote {
-    public DoctorEntity getDoctorByID(int doctorID);
-    
+
+
 }
