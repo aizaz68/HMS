@@ -4,13 +4,14 @@
  */
 package com.dreamersoft.hms.sessionbeans.testDefaultValueBean;
 
+/**
+ *
+ * @author Masood Subhani
+ */
+public class InvalidGenderException extends Exception {
 
-
-public class TestDefaultValueNotFoundException extends Exception {
-
-    public TestDefaultValueNotFoundException(String message) {
+    public InvalidGenderException(String message) {
         super(message);
     }
     
-
 }
